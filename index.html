@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Stream Viewer</title>
-  <link href="https://cdn.jsdelivr.net/npm/lucide@1.0.0/dist/lucide.min.css" rel="stylesheet">
   <style>
     :root {
       --primary: #3b82f6;
@@ -285,6 +284,12 @@
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       border: none;
     }
+
+    /* Icon styles */
+    .icon-sm {
+      width: 1rem;
+      height: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -300,7 +305,12 @@
   <main class="container">
     <!-- Search Bar -->
     <div class="search-container">
-      <i class="search-icon" data-lucide="search"></i>
+      <span class="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sm">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
       <input 
         type="search" 
         class="search-input" 
@@ -316,7 +326,12 @@
 
     <!-- No Results -->
     <div class="no-results" id="noResults" style="display: none;">
-      <i class="no-results-icon" data-lucide="search"></i>
+      <div class="no-results-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
       <h3 class="no-results-title">No streams found</h3>
       <p class="no-results-message">
         Try adjusting your search or filter to find what you're looking for.
@@ -333,14 +348,13 @@
 
   <!-- Theme Toggle -->
   <button class="theme-toggle" id="themeToggle">
-    <i data-lucide="moon"></i>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
   </button>
 
-  <script src="https://cdn.jsdelivr.net/npm/lucide@1.0.0/dist/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.525.0/dist/umd/lucide.min.js"></script>
   <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
-
     // Mock data for live streams
     const liveStreams = [
       {
@@ -432,16 +446,28 @@
         streamCard.innerHTML = `
           <div class="stream-thumbnail">
             <div class="stream-platform">${stream.platform}</div>
-            <i class="stream-play-icon" data-lucide="play"></i>
+            <svg class="stream-play-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
           </div>
           <div class="stream-content">
             <h3 class="stream-title">${stream.title}</h3>
             <div class="stream-meta">
               <span class="stream-meta-item">
-                <i data-lucide="users" class="icon-sm"></i> ${stream.viewers.toLocaleString()}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sm">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                ${stream.viewers.toLocaleString()}
               </span>
               <span class="stream-meta-item">
-                <i data-lucide="clock" class="icon-sm"></i> ${stream.duration}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sm">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                ${stream.duration}
               </span>
             </div>
           </div>
@@ -452,9 +478,6 @@
         `;
         streamsGrid.appendChild(streamCard);
       });
-      
-      // Refresh icons in new elements
-      lucide.createIcons();
     }
 
     // Filter streams based on search input
@@ -477,13 +500,12 @@
     }
 
     function updateThemeIcon() {
-      const icon = themeToggle.querySelector('i');
+      const icon = themeToggle.querySelector('svg');
       if (document.body.classList.contains('dark')) {
-        icon.setAttribute('data-lucide', 'sun');
+        icon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>';
       } else {
-        icon.setAttribute('data-lucide', 'moon');
+        icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
       }
-      lucide.createIcons();
     }
 
     // Initialize
